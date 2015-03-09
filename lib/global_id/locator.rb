@@ -127,7 +127,10 @@ class GlobalID
         end
       end
 
-      mattr_reader(:default_locator) { ActiveRecordFinder.new }
+      # Active Support 3.2 - mattr_accessor does not take blocks
+      # mattr_reader(:default_locator) { ActiveRecordFinder.new }
+      mattr_reader(:default_locator)
+      class_variable_set "@@default_locator", ActiveRecordFinder.new
 
       class BlockLocator
         def initialize(block)

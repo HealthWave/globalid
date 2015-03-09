@@ -14,7 +14,9 @@ class GlobalID
 
     initializer 'global_id' do |app|
 
-      app.config.global_id.app ||= app.railtie_name.remove('_application').dasherize
+      # Active Support String extension #remove not in 3.2
+      #app.config.global_id.app ||= app.railtie_name.remove('_application').dasherize
+      app.config.global_id.app ||= app.railtie_name.gsub!('_application','').dasherize
       GlobalID.app = app.config.global_id.app
 
       app.config.global_id.expires_in ||= 1.month
@@ -23,6 +25,9 @@ class GlobalID
       config.after_initialize do
         app.config.global_id.verifier ||= begin
           app.message_verifier(:signed_global_ids)
+        rescue NoMethodError
+          # In 3.2 Rails::Application#message_verifier does not exist
+          nil
         rescue ArgumentError
           nil
         end
