@@ -17,9 +17,10 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
 
   # TODO: may relax this dependency further
-  s.add_runtime_dependency 'activesupport', '~> 3.2.0'
+  s.add_runtime_dependency 'activesupport', '~> 4.0'
 
-  s.add_development_dependency 'minitest', '~> 4.0.0'
+  s.add_development_dependency 'activemodel', '~> 4.0'
+  s.add_development_dependency 'minitest', '~> 4.2'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'tzinfo'
 end
